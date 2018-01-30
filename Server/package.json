@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for the WhoOwesMe-WebApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "schrer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "sqlite": "^2.9.1",
+    "sqlite3": "^3.1.13"
+  }
+}
