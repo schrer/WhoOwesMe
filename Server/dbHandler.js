@@ -3,7 +3,8 @@
 /*jslint eqeqeq: true */
 
 
-var sqlite3 = require('sqlite3');
+var sqlite3 = require('sqlite3').verbose();
+var exec = require('child_process').exec;
 var db;
 
 
@@ -13,58 +14,81 @@ var db;
 module.exports = {
     init:init,
     addUser:addUser,
-    getUsers:getUsers,
+    getAllUsers:getAllUsers,
+    getActiveUsers:getActiveUsers,
     getSingleUser:getSingleUser,
     addPayment:addPayment,
     addDebt:addDebt
 };
 
+
 function init(){
-    db = new sqlite3.Database('./oweme.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE , function(err) {
+
+    var dbPath = './oweme.db';
+    var createSqlPath = "./resources/sql/create.sql";
+    exec("sqlite3 "+dbPath+" < "+createSqlPath, function(err,stdout,stderr){
+        if(err){
+            console.error(err);
+        }
+        if(stderr){
+            console.error(stderr);
+        }
+        if(stdout){
+            console.log(stdout);
+        }
+    });
+    console.log("Database created or already existing.");
+
+
+    db = new sqlite3.Database(dbPath, function(err) {
         if (err) {
             console.error(err.message);
         } else {
             console.log('Connected to the database.');
         }
     });
-
-    var fs=require('fs');
-    fs.readFile('./resources/sql/create.sql', function(err,data){
-        if(err){
-            console.error(err);
-        }
-
-        //console.log("data:"+data);
-        db.serialize(function() {
-            db.run(data.toString());
-    });
-    });
 }
 
 function addUser(name){
     var stmt = db.prepare("INSERT INTO users (name) VALUES (?)");
     stmt.run(name, function(err){
-        if(err){
+        if(err) {
             console.error(err);
-            return false;
         }
     });
-    console.log("Success adding");
     return true;
 }
 
-function getUsers(){
+function getActiveUsers() {
+    var users = [];
+    db.each("SELECT * FROM users WHERE active=1", function(err, row){
+        if(err){
+            console.error(err);
+            return null;
+        }
+        var newUser={userId:row.userId,name:row.name,purchaseSum:row.purchaseSum,debtSum:row.debtSum,active:row.active};
+        users.push(newUser);
+    });
+
+    return users;
+}
+
+function getAllUsers(){
     var users = [];
     db.each("SELECT * FROM users", function(err, row){
         if(err){
             console.error(err);
             return null;
         }
-        var newUser={userId:row.userId,name:row.name,purchaseSum:row.purchaseSum,debtSum:row.debtSum};
+        var newUser={userId:row.userId,name:row.name,purchaseSum:row.purchaseSum,debtSum:row.debtSum,active:row.active};
         users.push(newUser);
     });
 
     return users;
+}
+
+function deactivateUser(userId){
+
 }
 
 function getSingleUser(userId) {
@@ -75,7 +99,7 @@ function getSingleUser(userId) {
             console.error(err);
             return null;
         }
-        user={userId:row.userId,name:row.name,purchaseSum:row.purchaseSum,debtSum:row.debtSum};
+        user={userId:row.userId,name:row.name,purchaseSum:row.purchaseSum,debtSum:row.debtSum,active:row.active};
     });
     return user;
 }

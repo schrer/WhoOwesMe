@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS users(
     name TEXT NOT NULL UNIQUE, 
     purchaseSum INTEGER DEFAULT 0, 
     debtSum INTEGER DEFAULT 0,
+    active INTEGER NOT NULL DEFAULT 1,
     CHECK(debtSum>=0),
     CHECK(purchaseSum>=0)
 );
