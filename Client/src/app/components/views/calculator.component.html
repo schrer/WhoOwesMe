@@ -1,8 +1,16 @@
 <mat-toolbar>
   <span>Calculator</span>
 </mat-toolbar>
-<div>Test</div>
-<div *ngFor="let user of users" class="user-outer" [attr.data-user-id]="user.userId">
-  <label for="user-{{user.userId}}">{{user.name}}</label>
-  <input type="number" id="user-{{user.userId}}" placeholder="0.00€">
-</div>
+<mat-tab-group>
+  <mat-tab label="Calculate">
+    <div *ngFor="let user of users" class="user-outer" [attr.data-user-id]="user.userId">
+      <label for="user-{{user.userId}}">{{user.name}}</label>
+      <input type="number" id="user-{{user.userId}}" placeholder="0.00€">
+    </div>
+    <button mat-raised-button type="button" onclick="calculate()">Calculate</button>
+  </mat-tab>
+  <mat-tab label="Statistics">
+    <h1>Some more tab content</h1>
+  </mat-tab>
+</mat-tab-group>
+
