@@ -5,9 +5,9 @@
   <mat-tab label="Calculate">
     <div *ngFor="let user of users" class="user-outer" [attr.data-user-id]="user.userId">
       <label for="user-{{user.userId}}">{{user.name}}</label>
-      <input type="number" id="user-{{user.userId}}" placeholder="0.00€">
+      <input type="number" min="0" step="any" id="user-{{user.userId}}" placeholder="0.00€" value="{{user.payment_string}}">
     </div>
-    <button mat-raised-button type="button" onclick="calculate()">Calculate</button>
+    <button mat-raised-button type="button" (click)="calculate()">Calculate</button>
   </mat-tab>
   <mat-tab label="Statistics">
     <h1>Some more tab content</h1>

@@ -13,11 +13,12 @@ export class CalculatorComponent implements OnInit {
   ngOnInit(): void {
     this.users.push(new User(1, 'martin', 15, 15));
     this.users.push(new User(2, 'fabian', 1, 8));
+    this.users[0].payment_string = '10.52';
   }
 
   calculate(): void {
     console.log('calculate called');
-    /*
+
     //Auslesen der eingetragenen Werte
     let paid = [];
     this.users.forEach();
@@ -29,6 +30,7 @@ export class CalculatorComponent implements OnInit {
       {name: "Fabian W.", amount: +$("#torben").val()*100}
     ]
 
+    /*
     //Berechung des Mittelwertes
     var mean = Math.round(paid.reduce((sum,value) => sum+value.amount, 0) / paid.length);
 
