@@ -1,0 +1,8 @@
+<mat-toolbar>
+  <span>Calculator</span>
+</mat-toolbar>
+<div>Test</div>
+<div *ngFor="let user of users" class="user-outer" [attr.data-user-id]="user.userId">
+  <label for="user-{{user.userId}}">{{user.name}}</label>
+  <input type="number" id="user-{{user.userId}}" placeholder="0.00€">
+</div>
