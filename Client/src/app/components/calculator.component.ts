@@ -54,8 +54,8 @@ export class CalculatorComponent implements OnInit {
     console.log('sum: ' + sum + ' mean: ' + mean);
 
     // Aufteilung in "Schuldner" und "Gläubiger"
-    const inDebt = diff.filter(elem => elem.amount < 0).sort(function (a, b) {return Math.abs(b.amount) - Math.abs(a.amount);});
-    const creditor = diff.filter(elem => elem.amount > 0).sort(function (a, b) {return Math.abs(b.amount) - Math.abs(a.amount);});
+    const inDebt = diff.filter(elem => elem.amount < 0).sort(function (a, b) {return Math.abs(b.amount) - Math.abs(a.amount); });
+    const creditor = diff.filter(elem => elem.amount > 0).sort(function (a, b) {return Math.abs(b.amount) - Math.abs(a.amount); });
 
     // Negative Werte der "Schuldner ins positive kehren"
     inDebt.forEach(elem => elem.amount = elem.amount * (-1));
