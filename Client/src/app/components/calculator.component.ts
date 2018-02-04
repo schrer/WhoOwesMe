@@ -18,8 +18,7 @@ export class CalculatorComponent implements OnInit {
   constructor(private backendService: CalcBackendService) {}
 
   ngOnInit(): void {
-    //TODO: change to getActiveUsers()
-    this.users = this.backendService.getAllUsers();
+    this.users = this.backendService.getActiveUsers();
   }
 
   calculate(): void {
