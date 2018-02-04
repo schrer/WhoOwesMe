@@ -1,6 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <router-outlet></router-outlet>
-</div>
-
-
+<mat-toolbar>
+  <span>Calculator</span>
+</mat-toolbar>
+<mat-tab-group>
+  <mat-tab label="Calculate">
+    <app-calculator></app-calculator>
+  </mat-tab>
+  <mat-tab label="Users">
+    <h1>Some more tab content</h1>
+  </mat-tab>
+</mat-tab-group>
