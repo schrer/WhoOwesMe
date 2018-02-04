@@ -1,3 +1,16 @@
-<div *ngFor="let user of users">
-  {{user.name}}
+<div>
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="purchaseSum">
+      <mat-header-cell *matHeaderCellDef>Summe Ausgaben</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.purchaseSum}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['name', 'purchaseSum']"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: ['name', 'purchaseSum']"></mat-row>
+  </mat-table>
 </div>

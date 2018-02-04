@@ -1,6 +1,7 @@
 import {User} from '../model';
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class CalcBackendService {
@@ -9,13 +10,10 @@ export class CalcBackendService {
 
   calcApiDomain = 'http://localhost:8086';
 
-  getAllUsers(): User[] {
+  getAllUsers(): Observable<User[]>{
 
-    let users: User[] = []
-    this.http.get<User[]>(this.calcApiDomain + "/users").subscribe(data=>{data.forEach(backendUser => {users.push(this.convertBackendToFrontendUser(backendUser))})});
-    return users;
+    return this.http.get<User[]>(this.calcApiDomain + "/users");
   }
-
 
 
   getActiveUsers(): User[] {
@@ -48,5 +46,11 @@ export class CalcBackendService {
 
   convertBackendToFrontendUser(backendUser: User): User {
     return new User(backendUser.userId, backendUser.name, backendUser.debtSum, backendUser.purchaseSum, backendUser.active);
+  }
+
+  convertBackendToFrontendUsers(backendUsers: User[]): User[] {
+    let frontendUsers: User [] = [];
+    backendUsers.forEach(backendUser => frontendUsers.push(this.convertBackendToFrontendUser(backendUser)));
+    return frontendUsers;
   }
 }
