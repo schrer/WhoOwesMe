@@ -13,7 +13,7 @@ export class CalcBackendService {
   getAllUsers(): User[] {
 
     let users: User[] = []
-    this.http.get<User[]>("http://127.0.0.1:8086/users").subscribe(data=>{data.forEach(element => {kusers.push(new User(element.userId, element.name, element.debtSum, element.purchaseSum, element.active))})});
+    this.http.get<User[]>("http://127.0.0.1:8086/users").subscribe(data=>{data.forEach(element => {users.push(new User(element.userId, element.name, element.debtSum, element.purchaseSum, element.active))})});
     return users;
   }
 
