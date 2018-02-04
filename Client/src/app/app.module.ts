@@ -15,6 +15,7 @@ import {CalcBackendService} from "./service/calc-backend.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from "@angular/material";
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {MatTableModule} from "@angular/material";
     MatButtonModule,
     MatGridListModule,
     MatTableModule,
+    MatListModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule

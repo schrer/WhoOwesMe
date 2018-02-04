@@ -44,6 +44,20 @@ export class CalcBackendService {
     this.http.delete(this.calcApiDomain + "/payments/" + paymentId).subscribe();
   }
 
+  addDebt(debtor:number,lender:number,amount:number): void {
+    this.http.put(this.calcApiDomain + "/payments", {debtor:debtor, lender:lender, amount:amount}).subscribe();
+  }
+
+  setUserActive(userId:number, active:boolean): void {
+    let request;
+    if(active){
+      request = "users/activate";
+    } else {
+      request = "users/deactivate";
+    }
+    this.http.post(this.calcApiDomain + request,{id:userId}).subscribe();
+  }
+
   convertBackendToFrontendUser(backendUser: User): User {
     return new User(backendUser.userId, backendUser.name, backendUser.debtSum, backendUser.purchaseSum, backendUser.active);
   }
@@ -53,4 +67,5 @@ export class CalcBackendService {
     backendUsers.forEach(backendUser => frontendUsers.push(this.convertBackendToFrontendUser(backendUser)));
     return frontendUsers;
   }
+
 }

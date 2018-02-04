@@ -78,6 +78,27 @@ app.delete("/payments/:id", function(req,res){
     res.status(200).send();
 });
 
+app.put("/debts",function(req,res){
+    res.header('Access-Control-Allow-Origin', '*');
+    let debtor=req.body.debtor;
+    let lender=req.body.lender;
+    let amount=req.body.amount;
+    dbHandler.addDebt(debtor,lender,amount);
+    res.status(200).send();
+});
+
+app.post("users/activate", function(req,res){
+    res.header('Access-Control-Allow-Origin', '*');
+    dbHandler.activateUser(req.body.id);
+    res.status(200).send();
+});
+
+app.post("users/deactivate", function(req,res){
+    res.header('Access-Control-Allow-Origin', '*');
+    dbHandler.deactivateUser(req.body.id);
+    res.status(200).send();
+});
+
 
 var server = app.listen(8086, function(){
     "use strict";
