@@ -2,4 +2,5 @@
 
 ## Running the application
 
-Start 
+Start the server by running *node server/index.js*.
+Then start the client by running *ng serve --open* in the folder Client.

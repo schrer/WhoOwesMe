@@ -18,14 +18,8 @@ export class CalculatorComponent implements OnInit {
   constructor(private backendService: CalcBackendService) {}
 
   ngOnInit(): void {
-    // this.users = this.backendService.getActiveUsers();
-
-/*
-    this.users.push(new User(1, 'martin', 15, 15));
-    this.users.push(new User(2, 'fabian', 1, 8));
-    this.users.push(new User(3, 'michi', 1, 8));
-    this.users.push(new User(4, 'fubi', 1, 8));
-*/
+    //TODO: change to getActiveUsers()
+    this.users = this.backendService.getAllUsers();
   }
 
   calculate(): void {
@@ -89,5 +83,11 @@ export class CalculatorComponent implements OnInit {
 
   getUserById(userId: number): User {
     return this.users.find(u => u.userId === userId);
+  }
+
+  getCorrectColHeight(creditors){
+    let lengths: number[] = [];
+    creditors.forEach(cr => lengths.push(cr.debitors.length));
+    return Math.max(...lengths);
   }
 }
