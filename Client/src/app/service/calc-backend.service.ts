@@ -7,12 +7,12 @@ export class CalcBackendService {
 
   constructor(private http: HttpClient){}
 
-  calcApiDomain = 'localhost:8086';
+  calcApiDomain = 'http://localhost:8086';
 
   getAllUsers(): User[] {
 
     let users;
-    this.http.get("localhost:8086/users").subscribe((result:Response) => users = result.json())
+    this.http.get('http://localhost:8086/users').subscribe((result:Response) => users = result.json())
     return users;
   }
 
