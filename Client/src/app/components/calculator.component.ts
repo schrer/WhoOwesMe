@@ -29,7 +29,6 @@ export class CalculatorComponent implements OnInit {
       const value = $('#user-' + user.userId).val();
       paid.set(user.userId, (value && value >= 0) ? value * 100 : 0);
     });
-    paid.forEach(u => console.log(u));
 
     // Berechung des Mittelwertes
     let sum = 0;
@@ -74,10 +73,17 @@ export class CalculatorComponent implements OnInit {
     // creditor.forEach(cred => cred.debitors.forEach(deb=>alert(deb.name+" an "+cred.name+" "+deb.amount)));
     // creditor:{debitors:[{name,amount}],name,amount}
 
-    creditor.forEach((value) => console.log('name: ' + value.name + 'value: ' + value.debitors.length));
     this.creditors = creditor;
 
     this.showCalculations = true;
+    paid.forEach((value,key)=>{
+      this.backendService.addPayment(key,value);
+    });
+    this.creditors.forEach(cred => {
+      cred.debitors.forEach(deb => {
+        this.backendService.addDebt(deb.name,cred.name,deb.amount);
+      });
+    });
   }
 
   getUserById(userId: number): User {
@@ -88,5 +94,13 @@ export class CalculatorComponent implements OnInit {
     let lengths: number[] = [];
     creditors.forEach(cr => lengths.push(cr.debitors.length));
     return Math.max(...lengths);
+  }
+
+  getCorrectColNum(creditors): number{
+    if(creditors){
+      return creditors.length;
+    } else {
+      return 0;
+    }
   }
 }
