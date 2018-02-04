@@ -11,6 +11,11 @@ var dbHandler = new dbHandlerModule.DBHandler("./oweme.db");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 app.get("/", function(req,res){
@@ -19,7 +24,6 @@ app.get("/", function(req,res){
 
 //Get all users
 app.get("/users", function (req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     var users = dbHandler.getAllUsers();
     if(users && users.length>0){
         res.json(users);
@@ -30,7 +34,6 @@ app.get("/users", function (req,res){
 
 //Get active users
 app.get("/users/active", function (req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     var users = dbHandler.getActiveUsers();
     if(users && users.length>0){
         res.json(users);
@@ -41,7 +44,6 @@ app.get("/users/active", function (req,res){
 
 //Get single user by ID
 app.get("/users/:id", function (req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     var user = dbHandler.getSingleUser(req.params.id);
     if(user){
         res.json(user);
@@ -52,20 +54,17 @@ app.get("/users/:id", function (req,res){
 
 
 app.post("/users", function (req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     var name=req.body.name;
     dbHandler.addUser(name);
     res.status(200).send();
 });
 
 app.delete("/users/:id", function (req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     dbHandler.deactivateUser(req.params.id);
     res.status(200).send("user deactivated");
 });
 
 app.put("/payments", function(req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     var userId=req.body.userId;
     var amount=req.body.amount;
     dbHandler.addPayment(userId, amount);
@@ -73,13 +72,11 @@ app.put("/payments", function(req,res){
 });
 
 app.delete("/payments/:id", function(req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     dbHandler.deletePayment(req.params.id);
     res.status(200).send();
 });
 
 app.put("/debts",function(req,res){
-    res.header('Access-Control-Allow-Origin', '*');
     let debtor=req.body.debtor;
     let lender=req.body.lender;
     let amount=req.body.amount;
@@ -87,13 +84,15 @@ app.put("/debts",function(req,res){
     res.status(200).send();
 });
 
-app.post("users/activate", function(req,res){
+app.post("/activateuser", function(req,res){
+    console.log("Activating");
     res.header('Access-Control-Allow-Origin', '*');
     dbHandler.activateUser(req.body.id);
     res.status(200).send();
 });
 
-app.post("users/deactivate", function(req,res){
+app.post("/deactivateuser", function(req,res){
+    console.log("Deactivating");
     res.header('Access-Control-Allow-Origin', '*');
     dbHandler.deactivateUser(req.body.id);
     res.status(200).send();

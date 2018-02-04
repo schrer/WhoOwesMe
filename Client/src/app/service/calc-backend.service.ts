@@ -1,6 +1,6 @@
 import {User} from '../model';
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
@@ -51,10 +51,11 @@ export class CalcBackendService {
   setUserActive(userId:number, active:boolean): void {
     let request;
     if(active){
-      request = "users/activate";
+      request = "/activateuser";
     } else {
-      request = "users/deactivate";
+      request = "/deactivateuser";
     }
+
     this.http.post(this.calcApiDomain + request,{id:userId}).subscribe();
   }
 

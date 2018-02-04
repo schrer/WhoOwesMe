@@ -15,7 +15,7 @@
       <mat-cell *matCellDef="let element"><mat-slide-toggle [checked]=element.active (change)="calcBackendService.setUserActive(element.userId, $event.source.checked)"> Toggle!</mat-slide-toggle></mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="['name', 'purchaseSum']"></mat-header-row>
-    <mat-row *matRowDef="let myRowData; columns: ['name', 'purchaseSum']"></mat-row>
+    <mat-header-row *matHeaderRowDef="['name', 'purchaseSum', 'active']"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: ['name', 'purchaseSum', 'active']"></mat-row>
   </mat-table>
 </div>
