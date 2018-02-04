@@ -10,12 +10,16 @@ import {AppRoutingModule} from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { CalculatorComponent } from './components/calculator.component';
+import {DetailsComponent} from "./components/details.component";
+import {CalcBackendService} from "./service/calc-backend.service";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -23,9 +27,12 @@ import { CalculatorComponent } from './components/calculator.component';
     MatTabsModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    CalcBackendService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
