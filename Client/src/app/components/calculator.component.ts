@@ -75,15 +75,17 @@ export class CalculatorComponent implements OnInit {
 
     this.creditors = creditor;
 
-    this.showCalculations = true;
-    paid.forEach((value,key)=>{
-      this.backendService.addPayment(key,value);
-    });
-    this.creditors.forEach(cred => {
-      cred.debitors.forEach(deb => {
-        this.backendService.addDebt(deb.name,cred.name,deb.amount);
+    if(this.creditors.length>0) {
+      this.showCalculations = true;
+      paid.forEach((value, key) => {
+        this.backendService.addPayment(key, value);
       });
-    });
+      this.creditors.forEach(cred => {
+        cred.debitors.forEach(deb => {
+          this.backendService.addDebt(deb.name, cred.name, deb.amount);
+        });
+      });
+    }
   }
 
   getUserById(userId: number): User {
