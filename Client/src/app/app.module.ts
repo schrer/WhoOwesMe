@@ -17,6 +17,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from "@angular/material";
 import {MatListModule} from '@angular/material/list';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatTableModule,
     MatListModule,
     MatSlideToggleModule,
+    MatInputModule,
+    MatFormFieldModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule
