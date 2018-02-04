@@ -13,6 +13,7 @@ import { CalculatorComponent } from './components/calculator.component';
 import {DetailsComponent} from "./components/details.component";
 import {CalcBackendService} from "./service/calc-backend.service";
 import {HttpClientModule} from "@angular/common/http";
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {HttpClientModule} from "@angular/common/http";
     MatToolbarModule,
     MatTabsModule,
     MatButtonModule,
+    MatGridListModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule

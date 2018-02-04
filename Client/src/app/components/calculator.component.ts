@@ -11,22 +11,21 @@ declare var $: any;
 })
 export class CalculatorComponent implements OnInit {
   title = 'Calculator';
-  backendService: CalcBackendService;
   users: User[] = [];
   showCalculations = false;
   creditors: any[] = [];
 
+  constructor(private backendService: CalcBackendService) {}
 
   ngOnInit(): void {
-    this.backendService = new CalcBackendService();
-    this.users = this.backendService.getActiveUsers();
+    // this.users = this.backendService.getActiveUsers();
 
-    /*
+
     this.users.push(new User(1, 'martin', 15, 15));
     this.users.push(new User(2, 'fabian', 1, 8));
     this.users.push(new User(3, 'michi', 1, 8));
     this.users.push(new User(4, 'fubi', 1, 8));
-    */
+
   }
 
   calculate(): void {
