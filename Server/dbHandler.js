@@ -4,7 +4,6 @@
 
 
 let Database = require('better-sqlite3');
-let exec = require('child_process').exec;
 let db;
 
 class DBHandler {

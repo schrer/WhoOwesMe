@@ -1,16 +1,18 @@
-<div *ngFor="let user of users" class="user-outer" [attr.data-user-id]="user.userId">
-  <label for="user-{{user.userId}}">{{user.name}}</label>
-  <input type="number" min="0" step="any" id="user-{{user.userId}}" placeholder="0.00€" value="{{user.payment_string}}">
-</div>
-<button mat-raised-button type="button" (click)="calculate()">Calculate</button>
+<div align="center">
+  <div *ngFor="let user of users" class="user-outer" [attr.data-user-id]="user.userId" style="margin: 15px">
+    <label for="user-{{user.userId}}">{{user.name}}</label>
+    <input type="number" min="0" step="any" id="user-{{user.userId}}" placeholder="0.00€" value="{{user.payment_string}}">
+  </div>
+  <button mat-raised-button type="button" (click)="calculate()" style="margin: 15px">Calculate</button>
 
-<div *ngIf="showCalculations">
-  <mat-grid-list cols={{getCorrectColNum(creditors)}} rowHeight={{getCorrectColHeight(creditors)*65+65}}>
-    <mat-grid-tile *ngFor="let cred of creditors" id="creditor-{{cred.name}}">
-      <mat-grid-tile-header>{{getUserById(cred.name).name}} gets from</mat-grid-tile-header>
-      <mat-list>
-        <mat-list-item *ngFor="let debtor of cred.debitors"> {{getUserById(debtor.name).name}} {{debtor.amount}}€ </mat-list-item>
-      </mat-list>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div *ngIf="showCalculations">
+    <mat-grid-list cols={{getCorrectColNum(creditors)}} rowHeight={{getCorrectColHeight(creditors)*65+65}}>
+      <mat-grid-tile *ngFor="let cred of creditors" id="creditor-{{cred.name}}">
+        <mat-grid-tile-header>{{getUserById(cred.name).name}} gets from</mat-grid-tile-header>
+        <mat-list>
+          <mat-list-item *ngFor="let debtor of cred.debitors"> {{getUserById(debtor.name).name}} {{debtor.amount}}€ </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>
