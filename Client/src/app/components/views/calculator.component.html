@@ -4,3 +4,13 @@
 </div>
 <button mat-raised-button type="button" (click)="calculate()">Calculate</button>
 
+<div *ngIf="showCalculations">
+  <mat-grid-list cols="creditors.length">
+    <div *ngFor="let cred of creditors" id="creditor-{{cred.name}}">
+      {{getUserById(cred.name).name}} gets from
+      <div *ngFor="let debtor of cred.debitors">
+        {{getUserById(debtor.name).name}} {{debtor.amount}}€
+      </div>
+    </div>
+  </mat-grid-list>
+</div>

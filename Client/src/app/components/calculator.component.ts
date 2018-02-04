@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../model';
+import {CalcBackendService} from '../service/calc-backend.service';
 
 declare var $: any;
 
@@ -10,18 +11,25 @@ declare var $: any;
 })
 export class CalculatorComponent implements OnInit {
   title = 'Calculator';
+  backendService: CalcBackendService;
   users: User[] = [];
+  showCalculations = false;
+  creditors: any[] = [];
 
 
   ngOnInit(): void {
+    this.backendService = new CalcBackendService();
+    this.users = this.backendService.getActiveUsers();
+
+    /*
     this.users.push(new User(1, 'martin', 15, 15));
     this.users.push(new User(2, 'fabian', 1, 8));
     this.users.push(new User(3, 'michi', 1, 8));
-    this.users[0].payment_string = '10.52';
+    this.users.push(new User(4, 'fubi', 1, 8));
+    */
   }
 
   calculate(): void {
-    console.log('calculate called');
 
     // Auslesen der eingetragenen Werte
     const paid: Map<number, number> = new Map<number, number>();
@@ -30,16 +38,7 @@ export class CalculatorComponent implements OnInit {
       paid.set(user.userId, (value && value >= 0) ? value * 100 : 0);
     });
     paid.forEach(u => console.log(u));
-    console.log(paid.toString());
 
-    /*
-    var paid = [
-      {name: "Michi", amount: +$("#user-"+).val()*100},
-      {name: "Martin F.", amount: +$("#freshy").val()*100},
-      {name: "Fabian H.", amount: +$("#fubi").val()*100},
-      {name: "Martin S.", amount: +$("#torsten").val()*100},
-      {name: "Fabian W.", amount: +$("#torben").val()*100}
-    ]*/
     // Berechung des Mittelwertes
     let sum = 0;
     paid.forEach((value, key) => {
@@ -50,8 +49,6 @@ export class CalculatorComponent implements OnInit {
     // Berechnung wieviel jeder vom Durchscnitt weg ist
     const diff = [];
     paid.forEach((value, key) => diff.push({name: key, amount: (value - mean)}));
-
-    console.log('sum: ' + sum + ' mean: ' + mean);
 
     // Aufteilung in "Schuldner" und "Gläubiger"
     const inDebt = diff.filter(elem => elem.amount < 0).sort(function (a, b) {return Math.abs(b.amount) - Math.abs(a.amount); });
@@ -71,11 +68,11 @@ export class CalculatorComponent implements OnInit {
       while (remainingValue > 0 && inDebt.length > debitorIndex) {
         const debitorValue = inDebt[debitorIndex].amount;
         if (remainingValue < debitorValue) {
-          creditor[i].debitors.push({'name' : inDebt[debitorIndex].name, 'amount' : remainingValue});
+          creditor[i].debitors.push({'name' : inDebt[debitorIndex].name, 'amount' : remainingValue / 100});
           inDebt[debitorIndex].amount = inDebt[debitorIndex].amount - remainingValue;
           remainingValue = 0;
         } else {
-          creditor[i].debitors.push({'name': inDebt[debitorIndex].name, 'amount': inDebt[debitorIndex].amount});
+          creditor[i].debitors.push({'name': inDebt[debitorIndex].name, 'amount': inDebt[debitorIndex].amount / 100});
           remainingValue = remainingValue - inDebt[debitorIndex].amount;
           debitorIndex++;
         }
@@ -83,32 +80,15 @@ export class CalculatorComponent implements OnInit {
     }
 
     // creditor.forEach(cred => cred.debitors.forEach(deb=>alert(deb.name+" an "+cred.name+" "+deb.amount)));
+    // creditor:{debitors:[{name,amount}],name,amount}
 
     creditor.forEach((value) => console.log('name: ' + value.name + 'value: ' + value.debitors.length));
+    this.creditors = creditor;
 
+    this.showCalculations = true;
+  }
 
-    /*
-    let resulttable = $("#resulttable");
-    let resultrow = $("[name=resultdummy]");
-    let debitorrow = $("[name=debtorrowdummy]");
-
-    resulttable.empty()
-
-    for (var i = 0; i < creditor.length; i++) {
-
-      var newCredRow = resultrow.clone();
-      newCredRow.attr("name","resultrow");
-      $(newCredRow).find(".creditorcell").text(creditor[i].name + " bekommt");
-      resulttable.append(newCredRow);
-
-      for (var j = 0; j <creditor[i].debitors.length; j++) {
-        var debitor = creditor[i].debitors[j];
-        var newDebRow = debitorrow.clone();
-        newDebRow.attr("name","debitorrow");
-        $(newDebRow).find(".creditorcell").text(debitor.name + " " + debitor.amount/100 + "€");
-
-        newCredRow.append(newDebRow);
-      }
-    }*/
+  getUserById(userId: number): User {
+    return this.users.find(u => u.userId === userId);
   }
 }

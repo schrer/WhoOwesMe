@@ -1,5 +1,7 @@
+import {Component} from '@angular/core';
+
 @Component({
-	selectors: 'app-details',
+	selector: 'app-details',
 	templateUrl: 'views/details.component.html',
 	styleUrls: ['../app.component.css']
 })
