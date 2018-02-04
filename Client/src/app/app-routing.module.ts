@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {CalculatorComponent} from './components/calculator.component';
 const routes: Routes = [
   {path: '', redirectTo: '/calculator', pathMatch: 'full'},
-  {path: 'calculator', component: CalculatorComponent},
+  {path: 'calculator', component: AppComponent},
   {path: '**', redirectTo: '/calculator', pathMatch: 'full'}
 ];
 

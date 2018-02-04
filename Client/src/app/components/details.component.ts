@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from "@angular/core";
+import {User} from "../model";
+import {CalcBackendService} from "../service/calc-backend.service";
 
 @Component({
 	selector: 'app-details',
@@ -7,6 +9,16 @@ import {Component} from '@angular/core';
 })
 
 export class DetailsComponent {
+
+  constructor(private calcBackendService: CalcBackendService){}
+
+  ngOnInit(){
+
+    let users = this.calcBackendService.getAllUsers();
+
+    console.log(users.length);
+
+  }
 
 
 

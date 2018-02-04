@@ -1,9 +1,22 @@
 import {User} from '../model';
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 
+@Injectable()
 export class CalcBackendService {
+
+  constructor(private http: HttpClient){}
+
+  calcApiDomain = 'localhost:8086';
+
   getAllUsers(): User[] {
-    return null;
+
+    let users;
+    this.http.get("localhost:8086/users").subscribe((result:Response) => users = result.json())
+    return users;
   }
+
+
 
   getActiveUsers(): User[] {
     return null;
