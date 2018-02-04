@@ -1,45 +1,52 @@
 import {User} from '../model';
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable()
 export class CalcBackendService {
 
   constructor(private http: HttpClient){}
 
-  calcApiDomain = 'localhost:8086';
+  calcApiDomain = 'http://localhost:8086';
 
   getAllUsers(): User[] {
 
     let users: User[] = []
-    this.http.get<User[]>("http://127.0.0.1:8086/users").subscribe(data=>{data.forEach(element => {users.push(new User(element.userId, element.name, element.debtSum, element.purchaseSum, element.active))})});
+    this.http.get<User[]>(this.calcApiDomain + "/users").subscribe(data=>{data.forEach(backendUser => {users.push(this.convertBackendToFrontendUser(backendUser))})});
     return users;
   }
 
 
 
   getActiveUsers(): User[] {
-    return null;
+    let users: User[] = []
+    this.http.get<User[]>(this.calcApiDomain + "/users/active").subscribe(data=>{data.forEach(backendUser => {users.push(this.convertBackendToFrontendUser(backendUser))})});
+    return users;
   }
 
   getUser(userId: number): User {
-    return null;
+    let user: User;
+    this.http.get<User>(this.calcApiDomain + "/users/" + userId).subscribe(backendUser => user = this.convertBackendToFrontendUser(backendUser));
+    return user;
   }
 
-  addUser(name: string): boolean {
-    return false;
+  addUser(name: string): void {
+    this.http.post(this.calcApiDomain + "/users",{name:name}).subscribe();
   }
 
-  deleteUser(userId: number): boolean {
-    return false;
+  deleteUser(userId: number): void {
+    this.http.delete(this.calcApiDomain + "/users/" + userId).subscribe();
   }
 
-  addPayment(amount: number): boolean {
-    return false;
+  addPayment(userId: number, amount: number): void {
+    this.http.put(this.calcApiDomain + "/payments", {userId:userId,amount:amount}).subscribe();
   }
 
-  deletePayment(paymentId: number): boolean {
-    return false;
+  deletePayment(paymentId: number): void {
+    this.http.delete(this.calcApiDomain + "/payments/" + paymentId).subscribe();
+  }
+
+  convertBackendToFrontendUser(backendUser: User): User {
+    return new User(backendUser.userId, backendUser.name, backendUser.debtSum, backendUser.purchaseSum, backendUser.active);
   }
 }
