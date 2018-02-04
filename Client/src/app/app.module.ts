@@ -16,6 +16,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from "@angular/material";
 import {MatListModule} from '@angular/material/list';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {MatListModule} from '@angular/material/list';
     MatGridListModule,
     MatTableModule,
     MatListModule,
+    MatSlideToggleModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule
