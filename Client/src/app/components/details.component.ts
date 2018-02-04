@@ -23,4 +23,8 @@ export class DetailsComponent implements OnInit {
     this.calcBackendService.getAllUsers().subscribe(data=>{this.dataSource.data = this.calcBackendService.convertBackendToFrontendUsers(data)});
   }
 
+  checkChecked(): boolean{
+    return false;
+  }
+
 }
