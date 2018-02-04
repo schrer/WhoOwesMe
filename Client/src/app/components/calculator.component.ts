@@ -20,12 +20,12 @@ export class CalculatorComponent implements OnInit {
   ngOnInit(): void {
     // this.users = this.backendService.getActiveUsers();
 
-
+/*
     this.users.push(new User(1, 'martin', 15, 15));
     this.users.push(new User(2, 'fabian', 1, 8));
     this.users.push(new User(3, 'michi', 1, 8));
     this.users.push(new User(4, 'fubi', 1, 8));
-
+*/
   }
 
   calculate(): void {

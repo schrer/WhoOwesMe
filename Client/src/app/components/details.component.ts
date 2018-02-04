@@ -12,11 +12,12 @@ export class DetailsComponent {
 
   constructor(private calcBackendService: CalcBackendService){}
 
+  users: User[] = [];
+
   ngOnInit(){
 
-    let users = this.calcBackendService.getAllUsers();
+    this.users = this.calcBackendService.getAllUsers();
 
-    console.log(users.length);
 
   }
 
