@@ -3,17 +3,19 @@ export class User {
   private _userId: number;
   private _name: string;
   private _debtSum: number;
-  private _paymentSum: number;
+  private _purchaseSum: number;
   private _payment_string: string;
   private _payment: number;
+  private _active: boolean;
 
-  public constructor(userId: number, name: string, debtSum: number, paymentSum: number) {
+  public constructor(userId: number, name: string, debtSum: number, purchaseSum: number, active: boolean) {
     this._userId = userId;
     this._name = name;
     this._debtSum = debtSum;
-    this._paymentSum = paymentSum;
+    this._purchaseSum = purchaseSum;
     this._payment_string = null;
     this._payment = 0;
+    this._active = active;
   }
 
 
@@ -29,8 +31,8 @@ export class User {
     return this._debtSum;
   }
 
-  get paymentSum(): number {
-    return this._paymentSum;
+  get purchaseSum(): number {
+    return this._purchaseSum;
   }
 
 
@@ -48,5 +50,9 @@ export class User {
 
   set payment(value: number) {
     this._payment = value;
+  }
+
+  get active(): boolean {
+    return this._active;
   }
 }

@@ -1,6 +1,7 @@
 import {User} from '../model';
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable()
 export class CalcBackendService {
@@ -11,8 +12,8 @@ export class CalcBackendService {
 
   getAllUsers(): User[] {
 
-    let users;
-    this.http.get("localhost:8086/users").subscribe((result:Response) => users = result.json())
+    let users: User[] = []
+    this.http.get<User[]>("http://127.0.0.1:8086/users").subscribe(data=>{data.forEach(element => {console.log(element.name); users.push(new User(element.userId, element.name, element.debtSum, element.purchaseSum, element.active))})});
     return users;
   }
 

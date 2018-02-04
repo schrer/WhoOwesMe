@@ -19,6 +19,8 @@ app.get("/", function(req,res){
 
 //Get all users
 app.get("/users", function (req,res){
+    console.log("This is a test!");
+    res.header('Access-Control-Allow-Origin', '*');
     var users = dbHandler.getAllUsers();
     if(users && users.length>0){
         res.json(users);
